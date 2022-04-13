@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:12
+    volumes:
+      - type: volume
+        source: postgresdb-data
+        target: /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: some_user
+      POSTGRES_DB: some_db
+      POSTGRES_PASSWORD: some_password
+    networks:
+      - hac-loc
+  redis:
+    image: "redis:6.2-alpine"
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./loc/redis/data:/var/lib/redis
+      - ./loc/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    networks:
+      - hac-loc
+
+volumes:
+  postgresdb-data:
+    driver: local
+
+networks:
+  hac-loc:
