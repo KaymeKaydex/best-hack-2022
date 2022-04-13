@@ -1,0 +1,59 @@
+{
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "est Hack Stage API",
+        "title": "Best Hack Stage API",
+        "termsOfService": "https://quedafoe.ru",
+        "contact": {
+            "name": "API Support",
+            "url": "https://vk.com/abmanyl",
+            "email": "djassange@yandex.ru"
+        },
+        "license": {
+            "name": "Not for public use"
+        },
+        "version": "1.0"
+    },
+    "host": "quedafoe.ru",
+    "basePath": "/",
+    "paths": {
+        "/currencies/daily": {
+            "get": {
+                "description": "You can get a student pass, as well as his vaccination status and university position",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Currencies"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Day",
+                        "name": "day",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Month",
+                        "name": "month",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Year",
+                        "name": "year",
+                        "in": "query",
+                        "required": true
+                    }
+                ]
+            }
+        }
+    }
+}

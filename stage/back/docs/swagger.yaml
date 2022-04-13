@@ -1,0 +1,42 @@
+basePath: /
+host: quedafoe.ru
+info:
+  contact:
+    email: djassange@yandex.ru
+    name: API Support
+    url: https://vk.com/abmanyl
+  description: est Hack Stage API
+  license:
+    name: Not for public use
+  termsOfService: https://quedafoe.ru
+  title: Best Hack Stage API
+  version: "1.0"
+paths:
+  /currencies/daily:
+    get:
+      description: You can get a student pass, as well as his vaccination status and
+        university position
+      parameters:
+      - description: Day
+        in: query
+        name: day
+        required: true
+        type: integer
+      - description: Month
+        in: query
+        name: month
+        required: true
+        type: integer
+      - description: Year
+        in: query
+        name: year
+        required: true
+        type: integer
+      produces:
+      - application/json
+      tags:
+      - Currencies
+schemes:
+- https
+- http
+swagger: "2.0"
