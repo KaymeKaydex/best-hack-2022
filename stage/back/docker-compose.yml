@@ -26,6 +26,21 @@ services:
     networks:
       - hac-loc
 
+  mongodb:
+    image: mongo:latest
+    container_name: "auth-mongo"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+      - MONGODB_DATABASE=editt
+    volumes:
+      - ./.data/db:/data/db
+    ports:
+      - 27017:27017
+    command: mongod --logpath=/dev/null # --quiet
+    networks:
+      - hac-loc
+
 volumes:
   postgresdb-data:
     driver: local

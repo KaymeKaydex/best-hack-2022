@@ -1,0 +1,14 @@
+auth:
+  signing_key: "your_signing_key"
+  hash_salt: "your_hash_salt"
+  token_ttl: 86400
+
+mongo:
+  uri: "mongodb://localhost:27017"
+  name: "authorizer"
+  collection: "users"
+
+ServiceHost: "0.0.0.0"
+ServicePort: 80
+FVSiteAddress: "fv.bmstu.net"
+FVProtocol: "https"
