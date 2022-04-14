@@ -1,0 +1,48 @@
+{
+  "name": "hackathon-react-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.6.1",
+    "@mui/material": "^5.6.1",
+    "@rehooks/document-title": "^1.0.2",
+    "country-flag-icons": "^1.4.25",
+    "craco": "^0.0.3",
+    "lodash": "^4.17.21",
+    "mobx": "^6.5.0",
+    "mobx-react-lite": "^3.3.0",
+    "normalize.css": "^8.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hook-form": "^7.29.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.0",
+    "react-ts-tradingview-widgets": "^1.0.10",
+    "recharts": "^2.1.9",
+    "styled-components": "^5.3.5"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
