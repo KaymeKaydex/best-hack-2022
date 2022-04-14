@@ -18,6 +18,14 @@ type Config struct {
 
 	AppVersion string
 	LogLevel   string
+
+	Mongo Mongo
+}
+
+type Mongo struct {
+	URI        string
+	Collection string
+	Name       string
 }
 
 // NewConfig Создаёт новый объект конфигурации, загружая данные из файла конфигурации

@@ -26,7 +26,7 @@ type App struct {
 }
 
 func New(ctx context.Context) (*App, error) {
-	db := initDB()
+	db := initDB(ctx)
 
 	userRepo := mongo2.NewUserRepository(db, viper.GetString("mongo.collection"))
 	authUseCase := usecase.NewAuthorizer(
@@ -55,7 +55,7 @@ func (a *App) Run(ctx context.Context) error {
 		return err
 	}
 
-	router.InitAuthRouter(ctx)
+	// router.InitAuthRouter(ctx)
 
 	err = router.InitAPIRoutes(ctx)
 	if err != nil {
@@ -77,10 +77,12 @@ func (a *App) Run(ctx context.Context) error {
 	return r.Run(addr)
 }
 
-func initDB() *mongo.Database {
-	client, err := mongo.NewClient(options.Client().ApplyURI(viper.GetString("mongo.uri")))
+func initDB(ctx context.Context) *mongo.Database {
+	cfg := config.FromContext(ctx).Mongo
+
+	client, err := mongo.NewClient(options.Client().ApplyURI(cfg.URI))
 	if err != nil {
-		log.Fatalf("Error occured while establishing connection to mongoDB")
+		log.WithError(err).Fatal("Error occurred while establishing connection to mongoDB")
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -96,5 +98,5 @@ func initDB() *mongo.Database {
 		log.Fatal(err)
 	}
 
-	return client.Database(viper.GetString("mongo.name"))
+	return client.Database(cfg.Name)
 }

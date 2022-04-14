@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+
 	"github.com/zhashkevych/auth/pkg/models"
 )
 

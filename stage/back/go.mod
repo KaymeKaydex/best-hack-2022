@@ -10,8 +10,6 @@ require (
 )
 
 require (
-	github.com/basgys/goxml2json v1.1.0
-	github.com/bitly/go-simplejson v0.5.0 // indirect
 	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1
 	github.com/joho/godotenv v1.4.0
 	github.com/spf13/viper v1.10.1

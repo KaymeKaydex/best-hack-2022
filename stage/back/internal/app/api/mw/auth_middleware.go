@@ -1,18 +1,20 @@
-package api
+package mw
 
 import (
 	"net/http"
 	"strings"
 
-	"github.com/KaymeKaydex/best-hack-2022/internal/pkg/auth"
-	"github.com/KaymeKaydex/best-hack-2022/internal/pkg/parser"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
+
+	"github.com/KaymeKaydex/best-hack-2022/internal/pkg/auth"
+	"github.com/KaymeKaydex/best-hack-2022/internal/pkg/parser"
 )
 
-func AuthMiddleware(c *gin.Context) func(c *gin.Context) {
-	signKey := []byte(viper.GetString("auth.sign_key"))
+func AuthMiddleware() func(c *gin.Context) {
 	return func(c *gin.Context) {
+		signKey := []byte(viper.GetString("auth.sign_key"))
+
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
 			c.AbortWithStatus(http.StatusUnauthorized)

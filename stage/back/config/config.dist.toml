@@ -1,0 +1,14 @@
+ServiceHost = "0.0.0.0"
+ServicePort = 80
+
+[auth]
+SigningKey= "your_signing_key"
+HashSalt= "your_hash_salt"
+TokenTTL= 86400
+
+[mongo]
+URI= "mongodb=//localhost=27017"
+Name= "authorizer"
+Collection= "users"
+
+

@@ -47,14 +47,13 @@ func NewRouter(ctx context.Context, service IService, r *gin.Engine, authUseCase
 func (rtr *Router) InitAPIRoutes(ctx context.Context) error {
 	r := rtr.r
 
-	api := r.Group("/api")
-	api.Use(AuthMiddleware(&gin.Context{}))
+	// api.Use(mw.AuthMiddleware())
 	currenciesController, err := currencies.New()
 	if err != nil {
 		return err
 	}
 
-	api.GET("/currencies/*path", currenciesController.Daily)
+	r.GET("/currencies/*path", currenciesController.Currencies)
 
 	return nil
 }
