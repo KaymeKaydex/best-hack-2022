@@ -13,8 +13,8 @@ import (
 
 	"github.com/KaymeKaydex/best-hack-2022/internal/app/api"
 	"github.com/KaymeKaydex/best-hack-2022/internal/app/config"
+	mongo2 "github.com/KaymeKaydex/best-hack-2022/internal/app/repository/mongo"
 	"github.com/KaymeKaydex/best-hack-2022/internal/pkg/auth"
-	mongo2 "github.com/KaymeKaydex/best-hack-2022/internal/pkg/auth/repository/mongo"
 	"github.com/KaymeKaydex/best-hack-2022/internal/pkg/auth/usecase"
 )
 
@@ -28,7 +28,7 @@ type App struct {
 func New(ctx context.Context) (*App, error) {
 	db := initDB(ctx)
 
-	userRepo := mongo2.NewUserRepository(db, viper.GetString("mongo.collection"))
+	userRepo := mongo2.New(db, viper.GetString("mongo.collection"))
 	authUseCase := usecase.NewAuthorizer(
 		userRepo,
 		viper.GetString("auth.hash_salt"),

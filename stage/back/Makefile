@@ -14,15 +14,17 @@ build:
 test:
 	go test $(PWD)/... -parallel=10 -coverprofile=cover.out
 
-.PHONY: local
-local:
-	cp .dist.env .env
-
 # Генерация серверного сваггер-описания
 .PHONY: generate
 generate:
 	swag init --parseInternal -g cmd/$(NAME)/main.go
 
+# Распаковывает файлы с переменными окружения и конфигом
 .PHONY: local
-generate:
-	cp .dist.env .env && cp ./config/config.dist.toml ./config/config.toml
+local:
+	cp .dist.env .env && cp config/config.dist.toml config/config.toml
+
+# Запустить миграции
+.PHONY: migrate
+migrate:
+	go run $(PWD)/cmd/migrate

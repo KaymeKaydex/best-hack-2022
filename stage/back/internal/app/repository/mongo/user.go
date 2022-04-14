@@ -2,6 +2,7 @@ package mongo
 
 import (
 	"context"
+
 	log "github.com/sirupsen/logrus"
 	"github.com/zhashkevych/auth/pkg/auth"
 	"github.com/zhashkevych/auth/pkg/models"
@@ -13,7 +14,7 @@ type UserRepository struct {
 	db *mongo.Collection
 }
 
-func NewUserRepository(db *mongo.Database, collection string) *UserRepository {
+func New(db *mongo.Database, collection string) *UserRepository {
 	return &UserRepository{
 		db: db.Collection(collection),
 	}
@@ -22,7 +23,8 @@ func NewUserRepository(db *mongo.Database, collection string) *UserRepository {
 func (r *UserRepository) Insert(ctx context.Context, user *models.User) error {
 	_, err := r.db.InsertOne(ctx, user)
 	if err != nil {
-		log.Errorf("error on inserting user: %s", err.Error())
+		log.WithContext(ctx).WithError(err).Error("error on inserting user")
+
 		return auth.ErrUserAlreadyExists
 	}
 
