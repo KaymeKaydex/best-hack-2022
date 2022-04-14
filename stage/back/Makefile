@@ -22,3 +22,7 @@ local:
 .PHONY: generate
 generate:
 	swag init --parseInternal -g cmd/$(NAME)/main.go
+
+.PHONY: local
+generate:
+	cp .dist.env .env && cp ./config/config.dist.toml ./config/config.toml
