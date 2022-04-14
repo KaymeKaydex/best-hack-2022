@@ -11,10 +11,10 @@ import {
     TitleWrap,
     DescrWrap,
     Input,
-    ImageWrap,
     Content,
     ElaborationInfoWrap
 } from '@styles/contactForm.style';
+import { ImgWrap } from '../styles/blocks';
 
 function ContactForm() {
   return (
@@ -33,9 +33,10 @@ function ContactForm() {
                     <OpenAccountText>Открыть брокерский счёт</OpenAccountText>
                 </OpenAccountButton>
             </Form>
-            <ImageWrap>
-                <img src="/img/contact-info.png" alt="contact-info" />
-            </ImageWrap>
+            <ImgWrap
+                src="img/contact-info.svg" 
+                alt="contact-info" 
+            />
         </Content>
         <ElaborationInfoWrap>
             <ElaborationInfo>Заполняя форму, я принимаю условия передачи информации</ElaborationInfo>

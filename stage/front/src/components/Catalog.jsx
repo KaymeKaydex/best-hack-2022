@@ -14,13 +14,9 @@ import {observer} from 'mobx-react-lite';
 
 function Catalog() {
   useEffect(() => {
-    setTimeout(() => {
-      stocks.catalogStocks = [
-        {id: 123, imgSrc: '/img/stock.svg', shortener: 'SHT', price: '333', company: 'Zxzxc', diff: {value: -12, procentage: 1.34}},
-        {id: 123, imgSrc: '/img/stock.svg', shortener: 'SHT', price: '333', company: 'Zxzxc', diff: {value: 0, procentage: 0}},
-        {id: 123, imgSrc: '/img/stock.svg', shortener: 'SHT', price: '333', company: 'Zxzxc', diff: {value: 12, procentage: 1.34}},
-    ]
-    }, 1500);
+    fetch('https://www.cbr-xml-daily.ru/daily_json.js')
+      .then(res => res.json())
+      .then(data => stocks.setCatalogStocks(data));
   }, [])
   return (
     <React.Fragment>

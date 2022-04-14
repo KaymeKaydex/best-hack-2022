@@ -35,8 +35,6 @@ export const Input = styled.input`
     font-weight: 300;
     padding-left: 25px;
 `
-export const ImageWrap = styled(Box)`
-`
 
 export const OpenAccountText = textCreator(30.48, 26.43, 300, colors.white);
 export const OpenAccountButton = styled.button`

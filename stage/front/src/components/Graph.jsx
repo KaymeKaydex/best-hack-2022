@@ -5,13 +5,17 @@ import styled from '@emotion/styled';
 
 const GraphWrap = styled(Box)`
   width: 100%;
-  height: 500px;
+  height: 700px;
 `
 
-function Graph() {
+function Graph({symbol}) {
   return (
     <GraphWrap>
-      <AdvancedRealTimeChart theme="dark" autosize></AdvancedRealTimeChart>
+      <AdvancedRealTimeChart
+        symbol={symbol} 
+        theme="dark" 
+        autosize
+      ></AdvancedRealTimeChart>
     </GraphWrap>
   )
 }

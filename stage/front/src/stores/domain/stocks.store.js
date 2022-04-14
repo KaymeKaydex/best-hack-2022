@@ -7,6 +7,9 @@ class StocksStore {
     }
     catalogStocks = [];
     userStocks = [];
+    setCatalogStocks = (data) => {
+        this.catalogStocks = Object.values(data.Valute);
+    }
 }
 
 export default new StocksStore();

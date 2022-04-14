@@ -32,9 +32,9 @@ const company = 'Qweqwe';
 function StockPage() {
     const {id: stockId} = useParams();
     useEffect(() => {
-        setTimeout(() => {
-            stockPage.loaded();
-        }, 100);
+        fetch(`https://www.cbr.ru/scripts/XML_dynamic.asp?date_req1=02/03/2001&date_req2=14/03/2001&VAL_NM_RQ=${stockId}`)
+            .then((data) => data.json())
+            .then(json => console.log(json));
     }, [])
     if (!stockPage.isLoaded) 
         return (
@@ -89,7 +89,7 @@ function StockPage() {
                     >Авторизоваться</BuyButton>
             }
         </BuyStockCard>
-        <Graph />
+        <Graph symbol={'USDT.D'}/>
         <BuyStockModal
             imgSrc={imgSrc}
             packs={packs} 

@@ -1,13 +1,10 @@
 import colors from './colors';
 import styled from '@emotion/styled';
-import { styledOverride, textCreator, textWrapCreator } from './blocks';
+import { textCreator, textWrapCreator } from './blocks';
 import {
     Box,
     Button,
-    Menu,
-    MenuItem,
     Typography,
-    Modal
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { StyledModal } from './signModal.style';

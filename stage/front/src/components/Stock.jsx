@@ -17,35 +17,42 @@ import {
 import { Container, NavL } from '@styles/blocks';
 import {Box} from '@mui/material';
 
-function Stock({id, imgSrc, price, diff, company, shortener}) {
+function Stock({
+    ID,
+    Name,
+    CharCode,
+    Previous,
+    Value 
+}) {
+    console.log(arguments);
   return (
     <StyledStock>
         <Container>
-            <NavL to={`/stock/${id}`}>
+            <NavL to={`/stock/${ID}`}>
                 <Wrap>
                     <TitleWrap>
                         <StockLogoWrap>
-                            <img src={imgSrc} alt={`${company}-logo`} />
+                            <img src='img/stock.svg' alt={`logo`} />
                         </StockLogoWrap>
                         <Box marginLeft={'24px'}>
                             <CompanyWrap>
-                                <CompanyText>{company}</CompanyText>
+                                <CompanyText>{Name}</CompanyText>
                             </CompanyWrap>
                             <ShortenerWrap>
-                                <ShortenerText>{shortener}</ShortenerText>
+                                <ShortenerText>{CharCode}</ShortenerText>
                             </ShortenerWrap>
                         </Box>
                     </TitleWrap>
                     <Box>
                         <DifferenceWrap>
-                            <DifferenceText value={diff.value}>{diff.value} packs</DifferenceText>
+                            <DifferenceText value={Value - Previous}>{(Value - Previous * 100).toFixed(3)} packs</DifferenceText>
                         </DifferenceWrap>
                         <ProcentageWrap>
-                            <DifferenceText value={diff.value}>{diff.procentage}%</DifferenceText>
+                            <DifferenceText value={Value - Previous}>{((Value - Previous) / Previous).toFixed(3)}%</DifferenceText>
                         </ProcentageWrap>
                     </Box>
                     <PriceWrap>
-                        <PriceText>{price} packs</PriceText>
+                        <PriceText>{(Value - Previous).toFixed(3)} packs</PriceText>
                     </PriceWrap>
                 </Wrap>
             </NavL>

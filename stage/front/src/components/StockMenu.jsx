@@ -111,12 +111,7 @@ function StockMenu({stocks}) {
         {stocks.map((stock) => {
             return (
                 <Stock
-                    id={stock.id}
-                    imgSrc={stock.imgSrc}
-                    price={stock.price}
-                    diff={stock.diff}
-                    company={stock.company}
-                    shortener={stock.shortener}
+                    {...stock}
                 />
             )
         })}

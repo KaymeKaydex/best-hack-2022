@@ -50,7 +50,7 @@ export const StyledMenuItem = styled(MenuItem)`
 `
 
 export const Stock = styled(Box)`
-    height: 191px;
+    height: 210px;
     border-top: 1px ${colors.black} solid;
 `
 
@@ -104,6 +104,7 @@ export const TitleWrap = styled(Box)`
     display: flex;
     align-items: center;
     margin-left: 24px;
+    width: 100px;
 `
 
 export const PriceWrap = styled(Box)`

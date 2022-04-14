@@ -17,7 +17,7 @@ function SignUpForm() {
         <Input placeholder='Повторите пароль'></Input>
         <ActionButton m='35'><ActionButtonText>Зарегистрироваться</ActionButtonText></ActionButton> */}
         <ImageWrap>
-            <img src="/img/successful-sign-up.png" alt="successful-sign-up" />
+            <img src="/img/successful-sign-up.svg" alt="successful-sign-up" />
         </ImageWrap>
         <SuccessfulSignUpTextWrap>
             <SuccessfulSignUpText>Регистрация прошла успешно!</SuccessfulSignUpText>

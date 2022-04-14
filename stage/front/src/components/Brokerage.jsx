@@ -44,7 +44,7 @@ function Brokerage() {
                     </OpenAccountButton>
                 </Box>
                 <ImageWrap>
-                    <img src="img/brokage-icon.png" alt="brokage icon" />
+                    <img src="img/brockage-icon.svg" alt="brokage icon" />
                 </ImageWrap>
             </Info>
         </Content>
