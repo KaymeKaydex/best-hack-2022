@@ -13,6 +13,8 @@ import (
 	"github.com/KaymeKaydex/best-hack-2022/docs"
 	"github.com/KaymeKaydex/best-hack-2022/internal/app/api/v1/currencies"
 	"github.com/KaymeKaydex/best-hack-2022/internal/app/config"
+	"github.com/KaymeKaydex/best-hack-2022/internal/pkg/auth"
+	"github.com/KaymeKaydex/best-hack-2022/internal/pkg/auth/delivery"
 )
 
 // IService - интерфейс сервиса, который требует роутер
@@ -21,12 +23,13 @@ type IService interface{}
 // Router a.k. роутер является управляющей структурой всех открывающихся сокетов
 // и инициализирующихся эндпоинтов
 type Router struct {
-	r *gin.Engine
+	r           *gin.Engine
+	authUseCase auth.UseCase
 
 	Service IService
 }
 
-func NewRouter(ctx context.Context, service IService, r *gin.Engine) (*Router, error) {
+func NewRouter(ctx context.Context, service IService, r *gin.Engine, authUseCase auth.UseCase) (*Router, error) {
 	if service == nil {
 		log.WithContext(ctx).Error("service cant be nil")
 
@@ -34,8 +37,9 @@ func NewRouter(ctx context.Context, service IService, r *gin.Engine) (*Router, e
 	}
 
 	return &Router{
-		r:       r,
-		Service: service,
+		r:           r,
+		authUseCase: authUseCase,
+		Service:     service,
 	}, nil
 }
 
@@ -43,14 +47,23 @@ func NewRouter(ctx context.Context, service IService, r *gin.Engine) (*Router, e
 func (rtr *Router) InitAPIRoutes(ctx context.Context) error {
 	r := rtr.r
 
+	api := r.Group("/api")
+	api.Use(AuthMiddleware(&gin.Context{}))
 	currenciesController, err := currencies.New()
 	if err != nil {
 		return err
 	}
 
-	r.GET("/currencies/*path", currenciesController.Daily)
+	api.GET("/currencies/*path", currenciesController.Daily)
 
 	return nil
+}
+
+func (rtr *Router) InitAuthRouter(ctx context.Context) {
+	r := rtr.r
+
+	auth := r.Group("/auth")
+	delivery.RegisterAuthHTTPEndpoints(auth, rtr.authUseCase)
 }
 
 func (rtr *Router) InitSystemRoutes(ctx context.Context) error {
