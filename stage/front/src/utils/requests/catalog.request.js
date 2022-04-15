@@ -7,11 +7,7 @@ export function getCatalog() {
 }
 
 export async function getUserStocks(id) {
-    const res = await fetch(api.userStocksUrl(id), {
-        headers: new Headers({
-            'Authorization': jwtStore.getHeader(), 
-        })
-    });
+    const res = await fetch(api.userStocksUrl(id));
     const data = await getResponse(res);
     return data;
 }
