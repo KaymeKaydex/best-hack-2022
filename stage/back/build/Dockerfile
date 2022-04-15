@@ -1,5 +1,4 @@
-FROM scratch
-
+FROM debian
 
 COPY bin/back .
 
