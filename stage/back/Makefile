@@ -33,3 +33,8 @@ migrate:
 .PHONY: build
 build:
 	go build -o bin/$(NAME) $(PWD)/cmd/$(NAME)
+
+.PHONY: docker
+docker:
+	docker build -f ./build/Dockerfile -t back .
+
