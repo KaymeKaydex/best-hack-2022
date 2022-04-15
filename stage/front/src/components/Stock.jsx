@@ -24,7 +24,6 @@ function Stock({
     Previous,
     Value 
 }) {
-    console.log(arguments);
   return (
     <StyledStock>
         <Container>

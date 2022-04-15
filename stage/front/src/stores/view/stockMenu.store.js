@@ -1,8 +1,50 @@
 import { makeAutoObservable, reaction } from "mobx";
 
+export const INDUSTRY = 'industry';
+export const COUNTRY = 'country';
+export const DIFFERENCE = 'difference';
+export const PRICE = 'price';
+
 function switchIdReaction() {
     this.closeMenu();
 }
+
+export const PriceMenuItemNames = [
+    'Цена акции',
+    "По возрастнию",
+    "По убыванию",
+]
+
+export const IndustryMenuItemNames = [
+    'Любой отрасли',
+    'Другое',
+    'Здравоохранение',
+    'Зеленая энергетика',
+    'Информационные технологии',
+    'Материалы для эко-технологии',
+    'Машиностроение и транспорт',
+    'Недвижимость',
+    'Потребительские товары и услуги',
+    'Сырьевая промышленность',
+    'Телекоммуникации',
+    'Финансовый сектор',
+    'Электротранспорт и комплектующие',
+    'Электроэнергетика',
+    'Энергетика',
+    'Энергеэффективные здания',
+]
+
+export const CountryMenuItemNames = [
+    'Все',
+    'Российские',
+    'Иностранные',
+];
+
+export const DifferenceMenuItemNames = [
+    'Изменения за день',
+    'По возрастанию',
+    'По убыванию',
+];
 
 class StockMenuStore {
     constructor() {
@@ -14,6 +56,7 @@ class StockMenuStore {
             this.priceSelectedId,
         ], switchIdReaction.bind(this));
     }
+
     isLoaded = false;
     loaded = () => {this.isLoaded = true};
 
@@ -39,16 +82,16 @@ class StockMenuStore {
 
     openMenu = (curTarget) => {
         switch (curTarget.name) {
-            case 'industry':
+            case INDUSTRY:
                 this.setIndustryButtonEl(curTarget);
                 break;
-            case 'country':
+            case COUNTRY:
                 this.setCountryButtonEl(curTarget);
                 break;
-            case 'difference':
+            case DIFFERENCE:
                 this.setDifferenceButtonEl(curTarget);
                 break;
-            case 'price':
+            case PRICE:
                 this.setPriceButtonEl(curTarget);
                 break;
             default:
@@ -57,16 +100,16 @@ class StockMenuStore {
     }
     switchSelectedByName = (name, index) => {
         switch (name) {
-            case 'industry':
+            case INDUSTRY:
                 this.industrySelectedId = index;
                 break;
-            case 'country':
+            case COUNTRY:
                 this.countrySelectedId = index;
                 break;
-            case 'difference':
+            case DIFFERENCE:
                 this.differenceSelectedId = index;
                 break;
-            case 'price':
+            case PRICE:
                 this.priceSelectedId = index;
                 break;
             default:
@@ -82,50 +125,6 @@ class StockMenuStore {
 }
 
 export default new StockMenuStore();
-
-const PriceMenuItemNames = [
-    'Цена акции',
-    'Цена за лот',
-    "По возрастнию",
-    "По убыванию",
-]
-
-const IndustryMenuItemNames = [
-    'Любой отрасли',
-    'Другое',
-    'Здравоохранение',
-    'Зеленая энергетика',
-    'Информационные технологии',
-    'Материалы для эко-технологии',
-    'Машиностроение и транспорт',
-    'Недвижимость',
-    'Потребительские товары и услуги',
-    'Сырьевая промышленность',
-    'Телекоммуникации',
-    'Финансовый сектор',
-    'Электротранспорт и комплектующие',
-    'Электроэнергетика',
-    'Энергетика',
-    'Энергеэффективные здания',
-]
-
-const CountryMenuItemNames = [
-    'Все',
-    'Российские',
-    'Иностранные',
-];
-
-const DifferenceMenuItemNames = [
-    'Изменения за день',
-    'Доходность за полгода',
-    'По возрастанию',
-    'По убыванию',
-];
-
-export const INDUSTRY = 'industry';
-export const COUNTRY = 'country';
-export const DIFFERENCE = 'difference';
-export const PRICE = 'price';
 
 export const menuItemsNames = {
     [INDUSTRY]: IndustryMenuItemNames,

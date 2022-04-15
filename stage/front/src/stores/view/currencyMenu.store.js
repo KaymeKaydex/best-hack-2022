@@ -1,6 +1,30 @@
 import { makeAutoObservable, reaction } from "mobx";
 
-const countries = [
+function convert(value, ticker) {
+    let res = 0;
+    switch (ticker) {
+        case 'RUB':
+            res = value * 1
+            break;
+        case 'USD':
+            res = value * 80
+            break;
+        case 'EUR':
+            res = value * 90
+            break;
+        case 'GBP':
+            res = value * 30
+            break;
+        case 'JPY':
+            res = value * 0.3
+            break;
+        default:
+            break;
+    }
+    return res;
+}
+
+export const countries = [
     {title: 'Российский рубль', ticker: 'RUB', code: 'RU'},
     {title: 'Доллар США', ticker: 'USD', code: 'US'},
     {title: 'Евро', ticker: 'EUR', code: 'EU'},
@@ -11,7 +35,11 @@ const countries = [
 class CurrencyMenuStore {
     constructor() {
         makeAutoObservable(this);
-        reaction(() => this.amount, () => this.toPacks = this.amount + 3); ///!!!! Конвертация
+        reaction(() => [this.amount, this.countryId], () => {
+            this.toPacks = convert(
+                this.amount, countries[this.countryId].ticker,
+            )
+        });
     }
     el = null;
     amount = 0;

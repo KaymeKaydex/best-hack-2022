@@ -3,12 +3,18 @@ import { makeAutoObservable, reaction } from "mobx";
 class StocksStore {
     constructor() {
         makeAutoObservable(this);
-        reaction(() => this.data.length, () => console.log('Stocks data changed'));
+        reaction(() => this.catalogStocks, (v) => {
+            this.catalogStocks = Object.values(v.Valute);
+        })
     }
+    _catalogStocks = {};
     catalogStocks = [];
     userStocks = [];
     setCatalogStocks = (data) => {
-        this.catalogStocks = Object.values(data.Valute);
+        this._catalogStocks = data;
+    }
+    setCatalogArray = (data) => {
+        this.catalogStocks = data;
     }
     setUserStocks = (data) => {
         this.userStocks = Object.values(data.Valute);

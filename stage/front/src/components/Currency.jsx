@@ -12,7 +12,7 @@ import {
 } from '@styles/requestInfo.style';
 import Step from '@components/Step';
 import { observer } from 'mobx-react-lite';
-import currencyMenu from '@view/currencyMenu.store';
+import currencyMenu, { countries } from '@view/currencyMenu.store';
 import { 
     StyledMenu,
     StyledMenuItem,
@@ -26,6 +26,7 @@ import {
     Ticker
 } from '@styles/currency.style';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
 
 const steps = [
     {title: 'Быть программистом', descr: 'Понадобится только компьютер, мышка и интернет'},
@@ -133,12 +134,12 @@ function Currency() {
                 open={Boolean(currencyMenu.el)}
             >
                 {
-                    [1, 2, 3, 4].map((name, index) => {
+                    countries.map(({title}, index) => {
                         return (
                             <StyledMenuItem
                                 onClick={() => handleChangeCountry(index)}
                             >
-                            {name}{(index === currencyMenu.countryId) ? <DoneIcon /> : null}
+                            {title}{(index === currencyMenu.countryId) ? <DoneIcon /> : null}
                             </StyledMenuItem> 
                         )
                     })

@@ -9,12 +9,38 @@ import {
     StyledDoneIcon as DoneIcon
 } from '@styles/stockMenu.style';
 import {Container} from '@styles/blocks'
+import { toJS } from 'mobx';
 import stockMenu, {INDUSTRY, COUNTRY, DIFFERENCE, PRICE, menuItemsNames} from '@view/stockMenu.store';
 import { observer } from 'mobx-react-lite';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SortIcon from '@mui/icons-material/Sort';
 import Stock from '@components/Stock';
 import { CenteredProgress } from '@styles/blocks';
+import {
+    PriceMenuItemNames,
+    DifferenceMenuItemNames
+} from "@view/stockMenu.store";
+
+function getComparatorOfDiff(type) {
+    switch (type) {
+        case 'По возрастанию':
+            return (a, b) => a.Value - b.Value;
+        case 'По убыванию':
+            return (a, b) => b.Value - a.Value;
+        default:
+            return () => 0;
+    }
+}
+function getComparatorOfPrice(type) {
+    switch (type) {
+        case 'По возрастанию':
+            return (a, b) => (a.Value - a.Previous) - (b.Value - b.Previous);
+        case 'По убыванию':
+            return (a, b) => (b.Value - b.Previous) - (a.Value - a.Previous);
+        default:
+            return () => 0;
+    }
+}
 
 function StockMenuItems({menuName}) {
     function handleClickMenuItem(name, index) {
@@ -108,7 +134,10 @@ function StockMenu({stocks}) {
             <StockMenuItems menuName={PRICE}/>
             </StyledMenu>
         </Container>
-        {stocks.map((stock) => {
+        {toJS(stocks)
+            .sort(getComparatorOfDiff(DifferenceMenuItemNames[stockMenu.differenceSelectedId]))
+            .sort(getComparatorOfPrice(PriceMenuItemNames[stockMenu.priceSelectedId]))
+            .map((stock) => {
             return (
                 <Stock
                     {...stock}

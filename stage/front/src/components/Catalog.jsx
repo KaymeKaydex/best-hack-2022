@@ -11,6 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import StockMenu from '@components/StockMenu';
 import stocks from '@domain/stocks.store';
 import {observer} from 'mobx-react-lite';
+import {toJS} from 'mobx';
 
 function Catalog() {
   useEffect(() => {
@@ -18,12 +19,17 @@ function Catalog() {
       .then(res => res.json())
       .then(data => stocks.setCatalogStocks(data));
   }, [])
+  function handleChange(e) {
+      stocks.setCatalogArray(
+        toJS(stocks.catalogStocks).filter((stock) => toJS(stock).Name.includes(e.target.value))
+      );
+  }
   return (
     <React.Fragment>
       <Container>
           <StockInputWrap>
             <IconWrap><SearchIcon sx={{fontSize: '40px'}}/></IconWrap>
-            <StockInput placeholder='Название или тикер'></StockInput>
+            <StockInput placeholder='Название или тикер' onChange={handleChange}></StockInput>
           </StockInputWrap>
           <TitleWrap>
             <Title>Каталог акций</Title>
