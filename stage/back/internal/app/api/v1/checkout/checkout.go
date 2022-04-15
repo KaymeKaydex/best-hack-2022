@@ -22,28 +22,29 @@ type topUpResp struct {
 	amount uint64
 }
 
-func (c *Controller) TopUp(ctx *gin.Context) {
+func (c *Controller) TopUp(gCtx *gin.Context) {
 	req := topUpReq{}
+	ctx := gCtx.Request.Context()
 
-	err := ctx.BindJSON(&req)
+	err := gCtx.BindJSON(&req)
 	if err != nil {
-		ctx.Status(http.StatusBadRequest)
+		gCtx.Status(http.StatusBadRequest)
 		return
 	}
 
-	login, exists := ctx.Get(models.UserLoginCtxKey)
-	if !exists {
-		ctx.Status(http.StatusForbidden)
+	login := gCtx.Keys[models.UserLoginCtxKey]
+
+	if login == nil {
+		gCtx.Status(http.StatusForbidden)
 		return
 	}
-
 	loginStr := login.(string)
 
 	amount, err := c.srv.AddPacketsAmount(ctx, loginStr, req.amount)
 	if err != nil {
-		ctx.Status(http.StatusInternalServerError)
+		gCtx.Status(http.StatusInternalServerError)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, &topUpResp{amount: amount})
+	gCtx.JSON(http.StatusOK, &topUpResp{amount: amount})
 }

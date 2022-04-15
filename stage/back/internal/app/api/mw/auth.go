@@ -44,7 +44,7 @@ func WithAuthorize(cfg *config.Config) gin.HandlerFunc {
 			return []byte(cfg.JWT.SecretKeyJWT), nil
 		})
 		if err != nil {
-			gCtx.Status(http.StatusInternalServerError)
+			gCtx.AbortWithStatus(http.StatusForbidden)
 
 			return
 		}
