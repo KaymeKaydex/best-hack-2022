@@ -22,6 +22,7 @@ export const StockInput = styled.input`
     &:focus {
         outline: none;
     }
+    width: 100%;
 `
 
 export const IconWrap = styled(Box)`

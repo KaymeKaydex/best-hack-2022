@@ -15,7 +15,6 @@ export const Info = styled(Box)`
     padding: 46px;
     display: flex;
     width: 100%;
-    height: 363px;
     background: linear-gradient(90deg, #2D296E 0%, #675FE0 100%);
     justify-content: space-between;
 `
@@ -36,8 +35,6 @@ export const SegmentText = textCreator(36, 31, 300, colors.gray, {mTop: 161});
 export const InfoText = textCreator(45, 40, 300, colors.white, {mTop: 33});
 
 export const Column = styled(Box)`
-    height: ${(props) => props.height}px;
-    width: ${(props) => props.width}px;
     position: relative;
 `
 

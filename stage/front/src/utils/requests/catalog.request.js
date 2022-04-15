@@ -1,11 +1,17 @@
-import { getResponse, API } from './server-api';
+import api, { getResponse} from './server-api';
+import jwtStore from '@domain/jwt.store';
 
-export async function getCatalog() {
-    try {
-        const res = await fetch(API.CatalogUrl);
-        const data = await getResponse(res);
-        return data;
-    } catch (e) {
-        throw new Error(e);
-    }
+export function getCatalog() {
+    return fetch(api.catalogUrl())
+        .then(res => getResponse(res))
+}
+
+export async function getUserStocks(id) {
+    const res = await fetch(api.userStocksUrl(id), {
+        headers: new Headers({
+            'Authorization': jwtStore.getHeader(), 
+        })
+    });
+    const data = await getResponse(res);
+    return data;
 }

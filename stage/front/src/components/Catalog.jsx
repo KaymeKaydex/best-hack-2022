@@ -11,18 +11,13 @@ import SearchIcon from '@mui/icons-material/Search';
 import StockMenu from '@components/StockMenu';
 import stocks from '@domain/stocks.store';
 import {observer} from 'mobx-react-lite';
-import {toJS} from 'mobx';
 
 function Catalog() {
   useEffect(() => {
-    fetch('https://www.cbr-xml-daily.ru/daily_json.js')
-      .then(res => res.json())
-      .then(data => stocks.setCatalogStocks(data));
+    stocks.loadCatalog();
   }, [])
   function handleChange(e) {
-      stocks.setCatalogArray(
-        toJS(stocks.catalogStocks).filter((stock) => toJS(stock).Name.includes(e.target.value))
-      );
+    stocks.filterCatalogStocks(e.target.value);
   }
   return (
     <React.Fragment>

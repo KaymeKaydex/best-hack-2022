@@ -93,7 +93,7 @@ function Currency() {
                 <ContentTitle>Как использовать Packs?</ContentTitle>
             </ContentTitleWrap>
             <ContentDescrWrap>
-                <ContentDescr>Используйте packs для умножения на нашем сайте и хвастайтесь друзьям и коллегам, какой же успешный Вы прграммист!</ContentDescr>
+                <ContentDescr>Используйте packs для умножения на нашем сайте и хвастайтесь друзьям и коллегам, какой же успешный Вы программист!</ContentDescr>
             </ContentDescrWrap>
         </Box>
         <Box marginTop={'95px'} position='relative'>

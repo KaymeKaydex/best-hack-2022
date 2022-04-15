@@ -29,41 +29,41 @@ import investment from '@domain/investment.store';
 
 const data = [
     {
-        'year': '1 год',
-      "value": 4000,
+      'year': '1 год',
+      "Доход за время": 4000,
     },
     {
-      "value": 3000,
+      "Доход за время": 3000,
     },
     {
-      "value": 2000,
+      "Доход за время": 2000,
     },
     {
-      "value": 2780,
+      "Доход за время": 2780,
     },
     {
-        'year': '5 лет',
-      "value": 1890,
+      'year': '5 лет',
+      "Доход за время": 1890,
     },
     {
-      "value": 2390,
+      "Доход за время": 2390,
     },
     {
-      "value": 1890,
+      "Доход за время": 1890,
     },
     {
-      "value": 2390,
+      "Доход за время": 2390,
     },
     {
-        'year': '10 лет',
-        "value": 1890,
+      'year': '10 лет',
+      "Доход за время": 1890,
     },
     {
-      "value": 2390,
+      "Доход за время": 2390,
     },
     {
-        'year': '12 лет',
-        "value": 3490,
+      'year': '12 лет',
+      "Доход за время": 3490,
     }
 ]
 
@@ -116,7 +116,7 @@ function InvestmentTable() {
                     <XAxis dataKey={'year'}></XAxis>
                     <YAxis hide></YAxis>
                     <Tooltip></Tooltip>
-                    <Bar dataKey={'value'} fill={colors.dark}></Bar>
+                    <Bar dataKey={'Доход за время'} fill={colors.dark}></Bar>
                 </BarChart>
             </Box>
          </Table>

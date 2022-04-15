@@ -44,14 +44,14 @@ function Stock({
                     </TitleWrap>
                     <Box>
                         <DifferenceWrap>
-                            <DifferenceText value={Value - Previous}>{(Value - Previous * 100).toFixed(3)} packs</DifferenceText>
+                            <DifferenceText value={Value - Previous}>{((Value - Previous) * 100).toFixed(0)} packs</DifferenceText>
                         </DifferenceWrap>
                         <ProcentageWrap>
                             <DifferenceText value={Value - Previous}>{((Value - Previous) / Previous).toFixed(3)}%</DifferenceText>
                         </ProcentageWrap>
                     </Box>
                     <PriceWrap>
-                        <PriceText>{(Value - Previous).toFixed(3)} packs</PriceText>
+                        <PriceText>{(Value * 100).toFixed(0)} packs</PriceText>
                     </PriceWrap>
                 </Wrap>
             </NavL>

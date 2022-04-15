@@ -8,14 +8,13 @@ import {
     Line,
     StyledDoneIcon as DoneIcon
 } from '@styles/stockMenu.style';
-import {Container} from '@styles/blocks'
 import { toJS } from 'mobx';
 import stockMenu, {INDUSTRY, COUNTRY, DIFFERENCE, PRICE, menuItemsNames} from '@view/stockMenu.store';
 import { observer } from 'mobx-react-lite';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SortIcon from '@mui/icons-material/Sort';
 import Stock from '@components/Stock';
-import { CenteredProgress } from '@styles/blocks';
+import { Container } from '@styles/blocks';
 import {
     PriceMenuItemNames,
     DifferenceMenuItemNames
@@ -73,10 +72,9 @@ function StockMenu({stocks}) {
     }
     if (stocks.length === 0)
         return (
-            <CenteredProgress 
-                size={100}
-                mTop={60}
-            />
+            <Container>
+                <h1>Ничего не найдено</h1>
+            </Container>
         )
   return (
     <div>

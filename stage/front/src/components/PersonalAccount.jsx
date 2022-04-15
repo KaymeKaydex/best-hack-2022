@@ -17,7 +17,7 @@ import stocks from '@domain/stocks.store';
 import { BuyButton } from '@styles/stockPage.style';
 
 function PersonalAccount() {
-    const params = useParams();
+    const {id: userId} = useParams();
     const navigate = useNavigate();
     function handlePaymentEvent() {
         navigate('/payment');
@@ -27,9 +27,7 @@ function PersonalAccount() {
             navigate('/');
     });
     useEffect(() => {
-        fetch('https://www.cbr-xml-daily.ru/daily_json.js')
-          .then(res => res.json())
-          .then(data => stocks.setUserStocks(data));
+        stocks.loadUserStocks();
     }, [])
     if (stocks.userStocks.length === 0)
         return (
@@ -63,15 +61,12 @@ function PersonalAccount() {
                     width={540}
                     height={80}
                     onClick={handlePaymentEvent}
-                >
-                    Пополнить
-                </BuyButton>
+                >Пополнить</BuyButton>
             </Card>
         </Box>
         <Box>
             <TitleWrap>
-                {/* УДАЛИТЬ СНИЗУ ЭТОТ КОСТЫЛЬ */}
-                {user.isLoggedIn} 
+                {(user.isLoggedIn) ? null : null}
                 <Title>Мои акции</Title>
                 <StockMenu stocks={stocks.userStocks}/>
             </TitleWrap>

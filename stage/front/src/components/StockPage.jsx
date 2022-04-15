@@ -26,15 +26,11 @@ import user from '@domain/user.store';
 import spectator from '@view/spectator.store';
 
 const imgSrc = '/img/stock.svg';
-const packs = 100;
-const company = 'Qweqwe';
 
 function StockPage() {
     const {id: stockId} = useParams();
     useEffect(() => {
-        fetch(`https://www.cbr.ru/scripts/XML_dynamic.asp?date_req1=02/03/2001&date_req2=14/03/2001&VAL_NM_RQ=${stockId}`)
-            .then((data) => data.json())
-            .then(json => console.log(json));
+        stockPage.loadStock(stockId);
     }, [])
     if (!stockPage.isLoaded) 
         return (
@@ -48,25 +44,23 @@ function StockPage() {
         <Info>
             <Column
                 width={365}
-                height={260}
             >
-                <TickerText>FLWS</TickerText>
-                <CompanyText>One but more</CompanyText>
-                <TitleText>Доходность за полгода</TitleText>
-                <InfoText>-56.13%</InfoText>
+                <TickerText>{stockPage.charCode}</TickerText>
+                <CompanyText>{stockPage.name}</CompanyText>
+                <TitleText>Разница за день</TitleText>
+                <InfoText>{(stockPage.value - stockPage.previous).toFixed(3)}%</InfoText>
             </Column>
             <Column
                 width={840}
-                height={260}
             >
                 <LogoWrap src="/img/stock.svg"></LogoWrap>
                 <SegmentText>Сектор</SegmentText>
-                <InfoText>Пйцуйцйцу</InfoText>
+                <InfoText>Мировые валюты</InfoText>
             </Column>
         </Info>
         <BuyStockCard>
-            <DateText>12312312313131</DateText>
-            <PacksText>135 вйцвйцв</PacksText>
+            <DateText>{stockPage.name}</DateText>
+            <PacksText>{stockPage.nominal} packs</PacksText>
             <HavingStocksText>
                 {(user.isLoggedIn) ?
                     'У вас 13 шт.'
@@ -89,11 +83,11 @@ function StockPage() {
                     >Авторизоваться</BuyButton>
             }
         </BuyStockCard>
-        <Graph symbol={'USDT.D'}/>
+        <Graph symbol={stockPage.charCode}/> 
         <BuyStockModal
             imgSrc={imgSrc}
-            packs={packs} 
-            company={company}
+            packs={stockPage.nominal} 
+            company={stockPage.name}
         />
     </Container>
   )

@@ -15,11 +15,12 @@ class UserStore {
         reaction(() => this.packs, () => localStorage.setItem('packs', this.packs))
         reaction(() => this.id, () => localStorage.setItem('id', this.id))
     }
-    isLoggedIn = localStorage.getItem('isLoggedIn') || false; // !! - поменять на LocalStorage
+    isLoggedIn = localStorage.getItem('isLoggedIn') || false;
     name = localStorage.getItem('name') || '';
     surname = localStorage.getItem('surname') || '';
-    cards = localStorage.getItem('cards') || 0;
-    packs = localStorage.getItem('packs') || 0;
+    cards = parseInt(localStorage.getItem('cards')) || 0;
+    packs = parseInt(localStorage.getItem('packs')) || 0;
+    addPacks = (amount) => this.packs += amount;
     id = localStorage.getItem('id') || 0;
     setUser = (data) => {
         this.name = data.name;

@@ -18,12 +18,13 @@ import timer from '@domain/timer.store';
 import { useNavigate } from 'react-router-dom';
 import {useForm} from 'react-hook-form';
 import {observer} from 'mobx-react-lite';
+import user from '@domain/user.store';
 
 function PaymentPage() {
     const navigate = useNavigate();
     const { register, handleSubmit, reset } = useForm();
-    const onSubmit = data => {
-        console.log(data);
+    const onSubmit = ({amount}) => {
+        user.addPacks(parseInt(amount));
         const time = 10;
         const callback = () => navigate('/');
         timer.startTimer(time, 1, callback);
