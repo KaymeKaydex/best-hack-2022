@@ -10,13 +10,11 @@ require (
 )
 
 require (
-	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/jinzhu/gorm v1.9.16
 	github.com/joho/godotenv v1.4.0
 	github.com/lib/pq v1.10.5
 	github.com/pressly/goose v2.7.0+incompatible
-	github.com/spf13/jwalterweatherman v1.1.0
 	github.com/spf13/viper v1.10.1
-	github.com/zhashkevych/auth v0.0.0-20200331153139-c37e02c6aad8
 	go.mongodb.org/mongo-driver v1.9.0
 )

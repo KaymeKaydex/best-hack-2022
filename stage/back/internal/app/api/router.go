@@ -11,25 +11,28 @@ import (
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 
 	"github.com/KaymeKaydex/best-hack-2022/docs"
+	"github.com/KaymeKaydex/best-hack-2022/internal/app/api/mw"
+	"github.com/KaymeKaydex/best-hack-2022/internal/app/api/v1/auth"
+	"github.com/KaymeKaydex/best-hack-2022/internal/app/api/v1/checkout"
 	"github.com/KaymeKaydex/best-hack-2022/internal/app/api/v1/currencies"
 	"github.com/KaymeKaydex/best-hack-2022/internal/app/config"
-	"github.com/KaymeKaydex/best-hack-2022/internal/pkg/auth"
-	"github.com/KaymeKaydex/best-hack-2022/internal/pkg/auth/delivery"
 )
 
 // IService - интерфейс сервиса, который требует роутер
-type IService interface{}
+type IService interface {
+	AddPacketsAmount(ctx context.Context, login string, amount uint64) (uint64, error)
+	SignUp(ctx context.Context, login, pass string) (string, error)
+	SignIn(ctx context.Context, login, pass string) (string, error)
+}
 
 // Router a.k. роутер является управляющей структурой всех открывающихся сокетов
 // и инициализирующихся эндпоинтов
 type Router struct {
-	r           *gin.Engine
-	authUseCase auth.UseCase
-
+	r       *gin.Engine
 	Service IService
 }
 
-func NewRouter(ctx context.Context, service IService, r *gin.Engine, authUseCase auth.UseCase) (*Router, error) {
+func NewRouter(ctx context.Context, service IService, r *gin.Engine) (*Router, error) {
 	if service == nil {
 		log.WithContext(ctx).Error("service cant be nil")
 
@@ -37,9 +40,8 @@ func NewRouter(ctx context.Context, service IService, r *gin.Engine, authUseCase
 	}
 
 	return &Router{
-		r:           r,
-		authUseCase: authUseCase,
-		Service:     service,
+		r:       r,
+		Service: service,
 	}, nil
 }
 
@@ -47,22 +49,43 @@ func NewRouter(ctx context.Context, service IService, r *gin.Engine, authUseCase
 func (rtr *Router) InitAPIRoutes(ctx context.Context) error {
 	r := rtr.r
 
-	// api.Use(mw.AuthMiddleware())
-	currenciesController, err := currencies.New()
-	if err != nil {
-		return err
+	r.Use(mw.ConfigCtx(config.FromContext(ctx)))
+
+	// currencies
+	{
+		currenciesController, err := currencies.New()
+		if err != nil {
+			return err
+		}
+
+		r.GET("/currencies/*path", currenciesController.Currencies)
 	}
+	// auth
+	{
+		authContoller, err := auth.New(rtr.Service)
+		if err != nil {
+			return err
+		}
 
-	r.GET("/currencies/*path", currenciesController.Currencies)
-
+		authGroup := r.Group("/auth")
+		{
+			authGroup.POST("/sign_in", authContoller.SignIn)
+			authGroup.POST("/sign_up", authContoller.SignUp)
+		}
+	}
+	// checkout
+	{
+		checkoutController, err := checkout.New(rtr.Service)
+		if err != nil {
+			return err
+		}
+		checkoutGroup := r.Group("/checkout")
+		checkoutGroup.Use(mw.WithAuthorize(config.FromContext(ctx)))
+		{
+			checkoutGroup.POST("/pay", checkoutController.TopUp)
+		}
+	}
 	return nil
-}
-
-func (rtr *Router) InitAuthRouter(ctx context.Context) {
-	r := rtr.r
-
-	auth := r.Group("/auth")
-	delivery.RegisterAuthHTTPEndpoints(auth, rtr.authUseCase)
 }
 
 func (rtr *Router) InitSystemRoutes(ctx context.Context) error {

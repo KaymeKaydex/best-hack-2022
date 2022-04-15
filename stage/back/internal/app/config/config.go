@@ -20,12 +20,20 @@ type Config struct {
 	LogLevel   string
 
 	Mongo Mongo
+	JWT   JWT
 }
 
 type Mongo struct {
 	URI        string
 	Collection string
 	Name       string
+}
+
+type JWT struct {
+	// jwt
+	SigningMethod string
+	HourLifeTime  int
+	SecretKeyJWT  string `mapstructure:"JWT_SECRET_KEY"`
 }
 
 // NewConfig Создаёт новый объект конфигурации, загружая данные из файла конфигурации
@@ -54,6 +62,8 @@ func NewConfig(ctx context.Context) (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	viper.BindEnv("JWT_SECRET_KEY")
 
 	log.Info("config parsed")
 	return cfg, nil
