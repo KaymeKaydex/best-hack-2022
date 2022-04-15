@@ -28,3 +28,8 @@ local:
 .PHONY: migrate
 migrate:
 	go run $(PWD)/cmd/migrate
+
+# Запуск сервиса
+.PHONY: build
+build:
+	go build -o bin/$(NAME) $(PWD)/cmd/$(NAME)
