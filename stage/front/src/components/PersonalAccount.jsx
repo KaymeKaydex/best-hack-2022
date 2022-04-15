@@ -27,12 +27,9 @@ function PersonalAccount() {
             navigate('/');
     });
     useEffect(() => {
-        setTimeout(() => {
-            stocks.userStocks = [
-                {imgSrc: '/img/stock.svg', shortener: 'SHT', price: '333', company: 'Zxzxc', diff: {value: -12, procentage: 1.34}},
-                {imgSrc: '/img/stock.svg', shortener: 'SHT', price: '333', company: 'Zxzxc', diff: {value: 0, procentage: 0}},
-            ]
-        }, 1500);
+        fetch('https://www.cbr-xml-daily.ru/daily_json.js')
+          .then(res => res.json())
+          .then(data => stocks.setUserStocks(data));
     }, [])
     if (stocks.userStocks.length === 0)
         return (
@@ -53,8 +50,8 @@ function PersonalAccount() {
                     justifyContent={'space-between'}
                 >
                     <CardAmountWrap>
-                        <CardAmount>481 card</CardAmount>
-                        <PacksAmount>123.34 packs</PacksAmount>
+                        <CardAmount>{user.cards} card</CardAmount>
+                        <PacksAmount>{user.packs} packs</PacksAmount>
                     </CardAmountWrap>
                     <ImgWrap
                         width='170px'

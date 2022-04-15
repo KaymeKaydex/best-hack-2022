@@ -32,7 +32,7 @@ function Stock({
                 <Wrap>
                     <TitleWrap>
                         <StockLogoWrap>
-                            <img src='img/stock.svg' alt={`logo`} />
+                            <img src='/img/stock.svg' alt={`logo`} />
                         </StockLogoWrap>
                         <Box marginLeft={'24px'}>
                             <CompanyWrap>

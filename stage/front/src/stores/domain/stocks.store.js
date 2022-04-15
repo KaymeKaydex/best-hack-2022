@@ -10,6 +10,9 @@ class StocksStore {
     setCatalogStocks = (data) => {
         this.catalogStocks = Object.values(data.Valute);
     }
+    setUserStocks = (data) => {
+        this.userStocks = Object.values(data.Valute);
+    }
 }
 
 export default new StocksStore();
