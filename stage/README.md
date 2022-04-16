@@ -1,5 +1,8 @@
 # Code for stage project
 
+## Презентация 
+https://disk.yandex.ru/d/mbUb-WysDFUslA
+
 ## Как запускать? 
 
 На тесте мы поднимали реверс прокси nginx на фронт из контейнера и ставили на порт 3000, бек мы повесили внутри сети docker0 (см iptables)
