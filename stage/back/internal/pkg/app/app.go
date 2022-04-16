@@ -5,12 +5,16 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/KaymeKaydex/best-hack-2022/internal/app/repository/mongo"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 
 	"github.com/KaymeKaydex/best-hack-2022/internal/app/api"
 	"github.com/KaymeKaydex/best-hack-2022/internal/app/config"
+	"github.com/KaymeKaydex/best-hack-2022/internal/app/dsn"
+	"github.com/KaymeKaydex/best-hack-2022/internal/app/repository/mongo"
+	repository "github.com/KaymeKaydex/best-hack-2022/internal/app/repository/postgresql"
 	"github.com/KaymeKaydex/best-hack-2022/internal/app/service"
 )
 
@@ -28,7 +32,16 @@ func New(ctx context.Context) (*App, error) {
 
 	repo := mongo.New(ctx)
 
-	srv, err := service.New(ctx, repo)
+	db, err := gorm.Open("postgres", dsn.FromEnv())
+	if err != nil {
+		log.WithError(err).Println("Cant open postgers connection")
+
+		return nil, err
+	}
+
+	postgresqlRepo := repository.New(db)
+
+	srv, err := service.New(ctx, repo, postgresqlRepo)
 	if err != nil {
 		return nil, err
 	}

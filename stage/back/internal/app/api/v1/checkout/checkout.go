@@ -15,11 +15,11 @@ import (
 // @Router /checkout/top_up [post]
 
 type topUpReq struct {
-	amount uint64
+	Amount uint64
 }
 
 type topUpResp struct {
-	amount uint64
+	Amount uint64
 }
 
 func (c *Controller) TopUp(gCtx *gin.Context) {
@@ -40,11 +40,11 @@ func (c *Controller) TopUp(gCtx *gin.Context) {
 	}
 	loginStr := login.(string)
 
-	amount, err := c.srv.AddPacketsAmount(ctx, loginStr, req.amount)
+	amount, err := c.srv.AddPacketsAmount(ctx, loginStr, req.Amount)
 	if err != nil {
 		gCtx.Status(http.StatusInternalServerError)
 		return
 	}
 
-	gCtx.JSON(http.StatusOK, &topUpResp{amount: amount})
+	gCtx.JSON(http.StatusOK, &topUpResp{Amount: amount})
 }

@@ -11,10 +11,12 @@ import (
 	"github.com/KaymeKaydex/best-hack-2022/internal/app/config"
 	"github.com/KaymeKaydex/best-hack-2022/internal/app/models"
 	"github.com/KaymeKaydex/best-hack-2022/internal/app/repository/mongo"
+	postgresql "github.com/KaymeKaydex/best-hack-2022/internal/app/repository/postgresql"
 )
 
 type Service struct {
-	repo *mongo.Repository
+	repo     *mongo.Repository
+	psqlRepo *postgresql.Repository
 }
 
 func (s *Service) MakeHashString(str string) string {
@@ -51,6 +53,11 @@ func (s *Service) SignUp(ctx context.Context, login, pass string) (string, error
 		return "", err
 	}
 
+	err = s.psqlRepo.NewUser(ctx, models.User{Username: login, PacksAmount: 0})
+	if err != nil {
+		return "", err
+	}
+
 	rawJWT, err := createRawJWTByLogin(ctx, login)
 	if err != nil {
 		return "", err
@@ -59,9 +66,10 @@ func (s *Service) SignUp(ctx context.Context, login, pass string) (string, error
 	return rawJWT, nil
 }
 
-func New(ctx context.Context, repo *mongo.Repository) (*Service, error) {
+func New(ctx context.Context, repo *mongo.Repository, psqlRepo *postgresql.Repository) (*Service, error) {
 	return &Service{
-		repo: repo,
+		repo:     repo,
+		psqlRepo: psqlRepo,
 	}, nil
 }
 
@@ -89,15 +97,5 @@ func createRawJWTByLogin(ctx context.Context, login string) (string, error) {
 }
 
 func (s *Service) AddPacketsAmount(ctx context.Context, login string, amount uint64) (uint64, error) {
-	m, err := s.repo.GetByLogin(ctx, login)
-	if err != nil {
-		return 0, err
-	}
-
-	err = s.repo.SetAmount(ctx, login, m.PacksAmount+amount)
-	if err != nil {
-		return 0, err
-	}
-
-	return m.PacksAmount + amount, nil
+	return s.psqlRepo.AddPacks(ctx, login, amount)
 }
